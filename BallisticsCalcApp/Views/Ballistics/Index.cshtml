@@ -1,0 +1,61 @@
+﻿@model BallisticsCalcApp.Models.Ballistics
+
+@{
+    ViewBag.Title = "Index";
+
+}
+
+<h2>Shot Calculator</h2>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>New Bullet Drop</title>
+</head>
+<body>
+    <div>
+        @using (Html.BeginForm("Result", "Ballistics", FormMethod.Post))
+        {
+            <h2>Input Projectile Characteristics</h2>
+            <p>
+                <lable>Velocity of projectile (fps)</lable>
+                @Html.EditorFor(model => model.Velocity)
+
+            </p>
+
+            <p>
+                <lable>Projectile Mass (grains)</lable>
+                @Html.EditorFor(model => model.Mass)
+            </p>
+
+            <p>
+                <lable>Projectile Diameter (inch caliber)</lable>
+                @Html.EditorFor(model => model.Diameter)
+            </p>
+
+            <p>
+                <lable>Projectile Drag Coefficient </lable>
+                @Html.EditorFor(model => model.DragCoef)
+            </p>
+
+            <h2>Input Shot Characteristics</h2>
+            <p>
+                <lable>Distance to Target (m)</lable>
+                @Html.EditorFor(model => model.Distance)
+            </p>
+            <p>
+                <lable>Ambient Temperature (F)</lable>
+                @Html.EditorFor(model => model.TempFarenheit)
+            </p>
+            <input type="submit" value="PewPew" />
+
+
+
+            @Html.ActionLink("Back to List", "Index")
+        }
+
+    </div>
+</body>
+</html>

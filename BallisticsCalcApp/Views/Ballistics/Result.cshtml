@@ -1,0 +1,73 @@
+﻿@model BallisticsCalcApp.Models.Ballistics
+
+@{
+    ViewBag.Title = "Result";
+
+}
+
+<h2>Shot Calculator</h2>
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>New Bullet Drop</title>
+</head>
+<body>
+    <div>
+
+        <h2>Input Projectile Characteristics</h2>
+        <p>
+            <lable>Velocity of projectile (fps): </lable>
+            @Html.DisplayFor(model => model.Velocity)
+        </p>
+
+        <p>
+            <lable>Projectile Mass (grains): </lable>
+            @Html.DisplayFor(model => model.Mass)
+        </p>
+
+        <p>
+            <lable>Projectile Diameter (inch caliber): </lable>
+            @Html.DisplayFor(model => model.Diameter)
+        </p>
+
+        <h2>Input Shot Characteristics</h2>
+        <p>
+            <lable>Distance to Target (m): </lable>
+            @Html.DisplayFor(model => model.Distance)
+        </p>
+        <p>
+            <lable>Ambient Temperature (F): </lable>
+            @Html.DisplayFor(model => model.TempFarenheit)
+        </p>
+
+        <h2>Return Data</h2>
+
+        <p>
+            <label>Estimated Time of projectile impact:</label>
+            @Html.DisplayFor(model => model.EstImpactTime)
+        </p>
+        <p>
+            <label>Time of projectile impact calculated to:</label>
+            @Html.DisplayFor(model => model.ImpactTime)
+        </p>
+        <p>
+            <label>Velocity in Meter/s calculated to:</label>
+            @Html.DisplayFor(model => model.FinalVelocity)
+        </p>
+
+        <p>
+            <label>Bullet drop calculated to:</label>
+            @Html.DisplayFor(model => model.BulletDrop)
+        </p>
+
+
+
+        @Html.ActionLink("Back", "Index")
+
+
+    </div>
+</body>
+</html>
