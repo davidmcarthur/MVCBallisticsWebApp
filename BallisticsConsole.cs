@@ -14,10 +14,12 @@ namespace BallisticsConsole
             b.velocity = 762; // 762 m/s is 2500ft per second
             b.mass = 0.01360777; // 0.01360777 kg is 210 grains
 
-            double targetDistance = 400;        // 400 m to target
+            double targetDistance = 1000;        // 400 m to target
             double forceOfDrag;
             bool closeDistance = true;
             double area = Math.Pow(.5 * b.diameter, 2) * Math.PI;
+            int timeCounter = 0;
+            double time;
 
             double p = 1.225; // air density at sea level
             double coefficientDrag = .410; // that's a good bullet!
@@ -28,15 +30,18 @@ namespace BallisticsConsole
                 // 100th of second 
                 forceOfDrag = .5 * p * b.velocity * b.velocity * area;
                 b.velocity = b.velocity - (forceOfDrag / 100);
-                targetDistance = targetDistance - (b.velocity *0.01);
+                targetDistance = targetDistance - (b.velocity * 0.01);
+                timeCounter++;
                 Console.WriteLine($"The projectile velocity is {b.velocity}, drag force is {forceOfDrag}, target distance is {targetDistance}");
-                if(targetDistance < 0)
+                if (targetDistance < 0)
                 {
-                    Console.WriteLine("Target Destroyed");
+                    time = timeCounter * 0.01;      // divide time counter by 100 since each count was 1/100th of a sec
+                    Console.WriteLine($"time counter is {timeCounter}");
+                    Console.WriteLine($"Target Destroyed, time to target was {time} seconds");
                     closeDistance = false;
                 }
             }
-            
+
 
 
 
@@ -124,4 +129,3 @@ namespace BallisticsConsole
         }
     }
 }
-
