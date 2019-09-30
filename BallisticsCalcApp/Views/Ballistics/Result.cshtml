@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Result";
+    Layout = "~/Views/shared/_Layout.cshtml";
 
 }
 
@@ -13,61 +14,74 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>New Bullet Drop</title>
+    <style>
+        #indent {
+            margin-left: 50px;
+        }
+    </style>
 </head>
 <body>
     <div>
-
         <h2>Input Projectile Characteristics</h2>
-        <p>
-            <lable>Velocity of projectile (fps): </lable>
-            @Html.DisplayFor(model => model.Velocity)
-        </p>
-
-        <p>
-            <lable>Projectile Mass (grains): </lable>
-            @Html.DisplayFor(model => model.Mass)
-        </p>
-
-        <p>
-            <lable>Projectile Diameter (inch caliber): </lable>
-            @Html.DisplayFor(model => model.Diameter)
-        </p>
+        <div id="indent">
+            <p>
+                <h3>
+                    <lable>Velocity of projectile (fps):</lable>
+                    @Html.DisplayFor(model => model.Velocity)
+                </h3>
+            </p>
+            <p>
+                <h3>
+                    <lable>Projectile Mass (grains):</lable>
+                    @Html.DisplayFor(model => model.Mass)
+                </h3>
+            </p>
+            <p>
+                <h3>
+                    <lable>Projectile Diameter (inch caliber):</lable>
+                    @Html.DisplayFor(model => model.Diameter)
+                </h3>
+            </p>
+        </div>
 
         <h2>Input Shot Characteristics</h2>
-        <p>
-            <lable>Distance to Target (m): </lable>
-            @Html.DisplayFor(model => model.Distance)
-        </p>
-        <p>
-            <lable>Ambient Temperature (F): </lable>
-            @Html.DisplayFor(model => model.TempFarenheit)
-        </p>
+        <div id="indent">
+            <p>
+                <h3>
+                    <lable>Distance to Target (m):</lable>
+                    @Html.DisplayFor(model => model.Distance)
+                </h3>
+            </p>
+            <p>
+                <h3>
+                    <lable>Ambient Temperature (F):</lable>
+                    @Html.DisplayFor(model => model.TempFarenheit)
+                </h3>
+            </p>
+        </div>
 
         <h2>Return Data</h2>
-
-        <p>
-            <label>Estimated Time of projectile impact:</label>
-            @Html.DisplayFor(model => model.EstImpactTime)
-        </p>
-        <p>
-            <label>Time of projectile impact calculated to:</label>
-            @Html.DisplayFor(model => model.ImpactTime)
-        </p>
-        <p>
-            <label>Velocity in Meter/s calculated to:</label>
-            @Html.DisplayFor(model => model.FinalVelocity)
-        </p>
-
-        <p>
-            <label>Bullet drop calculated to:</label>
-            @Html.DisplayFor(model => model.BulletDrop)
-        </p>
-
-
-
+        <div id="indent">
+            <p>
+                <h3>
+                    <label>Time of projectile impact calculated to:</label>
+                    @Html.DisplayFor(model => model.ImpactTime) seconds
+                </h3>
+            </p>
+            <p>
+                <h3>
+                    <label>Velocity in Meter/s calculated to:</label>
+                    @Html.DisplayFor(model => model.FinalVelocity) meters/second
+                </h3>
+            </p>
+            <p>
+                <h3>
+                    <label>Bullet drop calculated to:</label>
+                    @Html.DisplayFor(model => model.BulletDrop) meters
+                </h3>
+            </p>
+        </div>
         @Html.ActionLink("Back", "Index")
-
-
     </div>
 </body>
 </html>

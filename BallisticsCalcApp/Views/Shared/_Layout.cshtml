@@ -1,15 +1,37 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html>
 <head>
+    <style>
+        html {
+            min-height: 100%;
+        }
+
+        body {
+            color: rebeccapurple;
+            
+        }
+
+        .navbar-default .navbar-toggle .icon-bar {
+            background-color: #01cc00;
+            color: rebeccapurple;
+            border-color: rebeccapurple;
+            border-width: 2px;
+        }
+    </style>
+
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title Zombie Killer Ballistics</title>
-    @Styles.Render("~/Content/css")
+
     @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/css")
+
 </head>
 <body>
-    
-    <div class="navbar navbar-inverse navbar-fixed-top">
+
+
+    <div style="background-color: #01cc00; color: rebeccapurple;"  class="navbar navbar-inverse navbar-fixed-top" >
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -17,11 +39,11 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Zombie Killer Ballistics", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Zombie Killer Ballistics", "Index", "Ballistics", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Home", "Index", "Ballistics")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>

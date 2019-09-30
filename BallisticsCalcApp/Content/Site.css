@@ -1,8 +1,11 @@
 ﻿body {
+    color: rebeccapurple;
     padding-top: 50px;
     padding-bottom: 20px;
-    background-color: aqua;
-    background-image: url("\photos\crosshairs.jpg")
+}
+
+input{
+    background-color: dimgray;
 }
 
 /* Set padding to keep content from hitting the edges */

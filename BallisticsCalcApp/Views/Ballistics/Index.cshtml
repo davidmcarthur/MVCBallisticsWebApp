@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Index";
+    Layout = "~/Views/shared/_Layout.cshtml";
 
 }
 
@@ -13,42 +14,62 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>New Bullet Drop</title>
+    <style>
+        #indent {
+            margin-left: 50px;
+        }
+    </style>
 </head>
 <body>
     <div>
         @using (Html.BeginForm("Result", "Ballistics", FormMethod.Post))
         {
             <h2>Input Projectile Characteristics</h2>
-            <p>
-                <lable>Velocity of projectile (fps)</lable>
-                @Html.EditorFor(model => model.Velocity)
+            <div id="indent">
+                <p>
+                    <h3>
 
-            </p>
+                        <lable>Velocity of projectile (fps)</lable>
+                        @Html.EditorFor(model => model.Velocity)
+                    </h3>
+                </p>
 
-            <p>
-                <lable>Projectile Mass (grains)</lable>
-                @Html.EditorFor(model => model.Mass)
-            </p>
+                <p>
+                    <h3>
+                        <lable>Projectile Mass (grains)</lable>
+                        @Html.EditorFor(model => model.Mass)
+                    </h3>
+                </p>
 
-            <p>
-                <lable>Projectile Diameter (inch caliber)</lable>
-                @Html.EditorFor(model => model.Diameter)
-            </p>
+                <p>
+                    <h3>
+                        <lable>Projectile Diameter (inch caliber)</lable>
+                        @Html.EditorFor(model => model.Diameter)
+                    </h3>
+                </p>
 
-            <p>
-                <lable>Projectile Drag Coefficient </lable>
-                @Html.EditorFor(model => model.DragCoef)
-            </p>
-
-            <h2>Input Shot Characteristics</h2>
-            <p>
-                <lable>Distance to Target (m)</lable>
-                @Html.EditorFor(model => model.Distance)
-            </p>
-            <p>
-                <lable>Ambient Temperature (F)</lable>
-                @Html.EditorFor(model => model.TempFarenheit)
-            </p>
+                <p>
+                    <h3>
+                        <lable>Projectile Drag Coefficient</lable>
+                        @Html.EditorFor(model => model.DragCoef)
+                    </h3>
+                </p>
+                </div>
+                <h2>Input Shot Characteristics</h2>
+                <div id="indent">
+                <p>
+                    <h3>
+                        <lable>Distance to Target (m)</lable>
+                        @Html.EditorFor(model => model.Distance)
+                    </h3>
+                </p>
+                <p>
+                    <h3>
+                        <lable>Ambient Temperature (F)</lable>
+                        @Html.EditorFor(model => model.TempFarenheit)
+                    </h3>
+                </p>
+            </div>
             <input type="submit" value="PewPew" />
 
 
