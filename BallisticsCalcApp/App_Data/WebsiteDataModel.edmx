@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="WebsiteDataModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="WebsiteDataModelStoreContainer">
+    <EntitySet Name="Users" EntityType="WebsiteDataModel.Store.Users" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ShotInformations" EntityType="WebsiteDataModel.Store.ShotInformations" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ShotDatas" EntityType="WebsiteDataModel.Store.ShotDatas" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="UserShotInformation" Association="WebsiteDataModel.Store.UserShotInformation">
+      <End Role="User" EntitySet="Users" />
+      <End Role="ShotInformation" EntitySet="ShotInformations" />
+    </AssociationSet>
+    <AssociationSet Name="ShotInformationShotData" Association="WebsiteDataModel.Store.ShotInformationShotData">
+      <End Role="ShotInformation" EntitySet="ShotInformations" />
+      <End Role="ShotData" EntitySet="ShotDatas" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserName" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Password" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="OldPassword" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ShotInformations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TargetRange" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="BallisticCoefficient" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Diameter" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Velocity" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Mass" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FinalVelocity" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ImpactTime" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DensityAltidude" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="User_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ShotDatas">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="VelocityX" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="VelocityY" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Time" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DistanceX" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="DistanceY" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ShotInformation_Id" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="UserShotInformation">
+    <End Role="User" Type="WebsiteDataModel.Store.Users" Multiplicity="1" />
+    <End Role="ShotInformation" Type="WebsiteDataModel.Store.ShotInformations" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShotInformation">
+        <PropertyRef Name="User_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="ShotInformationShotData">
+    <End Role="ShotInformation" Type="WebsiteDataModel.Store.ShotInformations" Multiplicity="1" />
+    <End Role="ShotData" Type="WebsiteDataModel.Store.ShotDatas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ShotInformation">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="ShotData">
+        <PropertyRef Name="ShotInformation_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="WebsiteDataModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="WebsiteDataModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Users" EntityType="WebsiteDataModel.User" />
+          <EntitySet Name="ShotInformations" EntityType="WebsiteDataModel.ShotInformation" />
+          <AssociationSet Name="UserShotInformation" Association="WebsiteDataModel.UserShotInformation">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ShotInformation" EntitySet="ShotInformations" />
+          </AssociationSet>
+          <EntitySet Name="ShotDatas" EntityType="WebsiteDataModel.ShotData" />
+          <AssociationSet Name="ShotInformationShotData" Association="WebsiteDataModel.ShotInformationShotData">
+            <End Role="ShotInformation" EntitySet="ShotInformations" />
+            <End Role="ShotData" EntitySet="ShotDatas" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserName" Type="String" Nullable="false" />
+          <Property Name="Password" Type="String" Nullable="false" />
+          <NavigationProperty Name="ShotInformations" Relationship="WebsiteDataModel.UserShotInformation" FromRole="User" ToRole="ShotInformation" />
+          <Property Name="OldPassword" Type="String" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShotInformation">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TargetRange" Type="String" Nullable="false" />
+          <Property Name="BallisticCoefficient" Type="String" Nullable="false" />
+          <Property Name="Diameter" Type="String" Nullable="false" />
+          <Property Name="Velocity" Type="String" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="WebsiteDataModel.UserShotInformation" FromRole="ShotInformation" ToRole="User" />
+          <Property Name="Mass" Type="String" Nullable="false" />
+          <Property Name="FinalVelocity" Type="String" Nullable="false" />
+          <Property Name="ImpactTime" Type="String" Nullable="false" />
+          <Property Name="DensityAltidude" Type="String" Nullable="false" />
+          <NavigationProperty Name="ShotDatas" Relationship="WebsiteDataModel.ShotInformationShotData" FromRole="ShotInformation" ToRole="ShotData" />
+        </EntityType>
+        <Association Name="UserShotInformation">
+          <End Type="WebsiteDataModel.User" Role="User" Multiplicity="1" />
+          <End Type="WebsiteDataModel.ShotInformation" Role="ShotInformation" Multiplicity="*" />
+        </Association>
+        <EntityType Name="ShotData">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="VelocityX" Type="String" Nullable="false" />
+          <Property Name="VelocityY" Type="String" Nullable="false" />
+          <Property Name="Time" Type="String" Nullable="false" />
+          <Property Name="DistanceX" Type="String" Nullable="false" />
+          <Property Name="DistanceY" Type="String" Nullable="false" />
+          <NavigationProperty Name="ShotInformation" Relationship="WebsiteDataModel.ShotInformationShotData" FromRole="ShotData" ToRole="ShotInformation" />
+        </EntityType>
+        <Association Name="ShotInformationShotData">
+          <End Type="WebsiteDataModel.ShotInformation" Role="ShotInformation" Multiplicity="1" />
+          <End Type="WebsiteDataModel.ShotData" Role="ShotData" Multiplicity="*" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="WebsiteDataModelStoreContainer" CdmEntityContainer="WebsiteDataModelContainer">
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IsTypeOf(WebsiteDataModel.User)">
+        <MappingFragment StoreEntitySet="Users">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="UserName" ColumnName="UserName" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="OldPassword" ColumnName="OldPassword" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShotInformations">
+      <EntityTypeMapping TypeName="IsTypeOf(WebsiteDataModel.ShotInformation)">
+        <MappingFragment StoreEntitySet="ShotInformations">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="TargetRange" ColumnName="TargetRange" />
+          <ScalarProperty Name="BallisticCoefficient" ColumnName="BallisticCoefficient" />
+          <ScalarProperty Name="Diameter" ColumnName="Diameter" />
+          <ScalarProperty Name="Velocity" ColumnName="Velocity" />
+          <ScalarProperty Name="Mass" ColumnName="Mass" />
+          <ScalarProperty Name="FinalVelocity" ColumnName="FinalVelocity" />
+          <ScalarProperty Name="ImpactTime" ColumnName="ImpactTime" />
+          <ScalarProperty Name="DensityAltidude" ColumnName="DensityAltidude" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ShotDatas">
+      <EntityTypeMapping TypeName="IsTypeOf(WebsiteDataModel.ShotData)">
+        <MappingFragment StoreEntitySet="ShotDatas">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="VelocityX" ColumnName="VelocityX" />
+          <ScalarProperty Name="VelocityY" ColumnName="VelocityY" />
+          <ScalarProperty Name="Time" ColumnName="Time" />
+          <ScalarProperty Name="DistanceX" ColumnName="DistanceX" />
+          <ScalarProperty Name="DistanceY" ColumnName="DistanceY" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="UserShotInformation" TypeName="WebsiteDataModel.UserShotInformation" StoreEntitySet="ShotInformations">
+      <EndProperty Name="User">
+        <ScalarProperty Name="Id" ColumnName="User_Id" />
+      </EndProperty>
+      <EndProperty Name="ShotInformation">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ShotInformationShotData" TypeName="WebsiteDataModel.ShotInformationShotData" StoreEntitySet="ShotDatas">
+      <EndProperty Name="ShotInformation">
+        <ScalarProperty Name="Id" ColumnName="ShotInformation_Id" />
+      </EndProperty>
+      <EndProperty Name="ShotData">
+        <ScalarProperty Name="Id" ColumnName="Id" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

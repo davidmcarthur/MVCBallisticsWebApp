@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="81da390904e64f9d91869ccefe74881e" Name="Diagram1" >
+        <EntityTypeShape EntityType="WebsiteDataModel.User" Width="1.5" PointX="1.625" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WebsiteDataModel.ShotInformation" Width="1.5" PointX="3.875" PointY="1.125" />
+        <AssociationConnector Association="WebsiteDataModel.UserShotInformation" />
+        <EntityTypeShape EntityType="WebsiteDataModel.ShotData" Width="1.5" PointX="6" PointY="1.125" />
+        <AssociationConnector Association="WebsiteDataModel.ShotInformationShotData" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
