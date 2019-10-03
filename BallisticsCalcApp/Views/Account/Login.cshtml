@@ -1,11 +1,9 @@
-﻿@model BallisticsCalcApp.Models.AccountModel
+﻿@model BallisticsCalcApp.Models.Login
 
 @{
     ViewBag.Title = "Login";
     Layout = "~/Views/shared/_Layout.cshtml";
 }
-
-
 
 <hgroup class="title">
     <h2>@ViewBag.Title.</h2>
@@ -18,10 +16,10 @@
 
     <div>
         <span class="editor-label">
-            @Html.LabelFor(login => login.)
+            @Html.LabelFor(m => m.UserName)
         </span>
         <span class="editor-field">
-            @Html.TextBoxFor(m => m., new { @class = "text-box" })
+            @Html.TextBoxFor(m => m.UserName, new { @class = "text-box" })
         </span>
     </div>
 
