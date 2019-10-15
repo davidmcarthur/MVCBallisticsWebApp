@@ -176,6 +176,8 @@
       <LastGenOutput>WebsiteDataModel.Context.cs</LastGenOutput>
       <DependentUpon>WebsiteDataModel.edmx</DependentUpon>
     </Content>
+    <Content Include="Images\aspectcrosshairs.jpg" />
+    <Content Include="Images\Crosshairedit.jpg" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
