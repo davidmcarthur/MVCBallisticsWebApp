@@ -19,25 +19,45 @@ namespace BallisticsCalcApp.Controllers
         [HttpPost]
         public ActionResult Index(Ballistics ballistics)
         {
-
             return View("Index", ballistics);
+        }
+
+        [HttpPost]
+        [ChildActionOnly]
+        public ActionResult _EnterData(Ballistics ballistics)
+        {
+           
+            return PartialView("_EnterData", ballistics);
         }
 
         // GET: Ballistics/Create
         [HttpPost]
         public ActionResult Result(Ballistics ballistics)
         {
+
+            // Call constructor and collect data from index page
+            ballistics.SetBallistics(ballistics.Velocity, ballistics.Mass,
+                ballistics.Diameter, ballistics.Distance, ballistics.TempFarenheit,
+                ballistics.DragCoef, ballistics.WindDirection, ballistics.WindVelocityMPH);
+
             // contextDB.Ballistics.Add(ballistics);
             //OH GOD!!!!!
-            ballistics.SetBallistics(ballistics.Velocity, ballistics.Mass, ballistics.Diameter, ballistics.Distance, ballistics.TempFarenheit, ballistics.DragCoef);
+
             ballistics.CalculatePressure(ballistics.TempCelcius);
             ballistics.DoBallisticsMath();
             // ballistics math must run first
-            ballistics.EstimateWind(ballistics.WindDirection, ballistics.WindVelocityMPH);
-
-
+            ballistics.EstimateWind();
             return View("Result", ballistics);
         }
+
+        [HttpGet]
+        [ChildActionOnly]
+        public ActionResult _Results(Ballistics ballistics)
+        {
+           
+            return PartialView("_Results", ballistics);
+        }
+
         public BallisticsController()
         {
         }

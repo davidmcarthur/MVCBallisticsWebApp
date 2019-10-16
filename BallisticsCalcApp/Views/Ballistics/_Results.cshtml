@@ -1,0 +1,29 @@
+﻿@model BallisticsCalcApp.Models.Ballistics
+
+<h2>Return Data</h2>
+<div id="indent">
+    <p>
+        <h3>
+            <label>Time of projectile impact calculated to:</label>
+            @Html.DisplayFor(model => model.ImpactTime) seconds
+        </h3>
+    </p>
+    <p>
+        <h3>
+            <label>Velocity in Meter/s calculated to:</label>
+            @Html.DisplayFor(model => model.FinalVelocity) meters/second
+        </h3>
+    </p>
+    <p>
+        <h3>
+            <label>Bullet drop calculated to:</label>
+            @Html.DisplayFor(model => model.BulletDrop) meters
+        </h3>
+    </p>
+    <p>
+        <h3>
+            <label>Wind Value calculated to:</label>
+            @Html.DisplayFor(model => model.WindValue) meters
+        </h3>
+    </p>
+</div>

@@ -4,12 +4,15 @@ namespace BallisticsCalcApp.Models
 {
     public class Ballistics
     {
+        // Input Properties
         // speed of the projectile in meters/second
         public string Velocity { get; set; }
         public string Mass { get; set; }
         public string Diameter { get; set; }
         public string Distance { get; set; }
         public string TempFarenheit { get; set; }
+
+        // Return Properties
         public string FinalVelocity { get; set; }
         public string BulletDrop { get; set; }
         public string ImpactTime { get; set; }
@@ -18,27 +21,29 @@ namespace BallisticsCalcApp.Models
         public string AirDensity { get; set; }
         public string DragCoef { get; set; }
 
-        // Double Props
+        // Conversion properties
         public double DoubleMeterVelocity { get; set; }
         public double DoubleMassKilos { get; set; }
         public double DoubleAreaMeters { get; set; }
         public double DoubleTargetDistMeters { get; set; }
         public double DoubleDragCoef { get; set; }
+
+        // TODO: Make feature to input altitude air density
         public double pAirDensity = 1.225;
         public double TempCelcius { get; set; }
 
         // Wind
         public string WindDirection { get; set; }
         public string WindVelocityMPH { get; set; }
-        // unused thus far.
-        //public double VelocityZ { get; set; }
+        public double WindValue { get; set; }
         public double DistanceZ { get; set; }
 
         // default constructor
         public Ballistics() { }
 
         // This method should build out the model for the conroller class.
-        public void SetBallistics(string velocity, string mass, string diameter, string distance, string tempFarenheit, string dragCoef)
+        public void SetBallistics(string velocity, string mass, string diameter, string distance, string tempFarenheit,
+            string dragCoef, string windDirection, string windVelocityMPH)
         {
             // set velocity in meters
             FromFeetPerSecond(velocity);
@@ -50,18 +55,20 @@ namespace BallisticsCalcApp.Models
             ConvertDistance(distance);
             // convert temp to C
             SetTemp(tempFarenheit);
+            // Set wind variables
+            windVelocityMPH = this.WindVelocityMPH;
+            windDirection = this.WindDirection;
 
         }
 
 
         //  Ballisitics WIND
-        public void EstimateWind(string windDirection, string windVelocity)
+        public void EstimateWind()
         {
-            int direction = Convert.ToInt32(windDirection);
-            double velocity = Convert.ToDouble(windVelocity);
+            int direction = Convert.ToInt32(WindDirection);
             // convert wind in MPH to meters/second 0.44704
-            velocity = velocity * 0.44704;
-
+            double velocity = (Convert.ToDouble(WindVelocityMPH)) * 0.44704;
+            
             double windValue =0;
 
             if (direction > 330 && direction <= 360 || direction > 0 && direction < 30
@@ -87,7 +94,7 @@ namespace BallisticsCalcApp.Models
             // Rate * Time = Dist
             // will be in meters...
             DistanceZ = Convert.ToDouble(this.EstImpactTime) * velocity * windValue;
-            
+            WindValue = windValue;
         }
 
         public void DoBallisticsMath()

@@ -1,0 +1,57 @@
+﻿@model BallisticsCalcApp.Models.Ballistics
+
+<h2>Input Projectile Characteristics</h2>
+<div id="indent">
+    <p>
+        <h3>
+
+            <lable>Velocity of projectile (fps)</lable>
+            @Html.EditorFor(model => model.Velocity)
+        </h3>
+    </p>
+    <p>
+        <h3>
+            <lable>Projectile Mass (grains)</lable>
+            @Html.EditorFor(model => model.Mass)
+        </h3>
+    </p>
+    <p>
+        <h3>
+            <lable>Projectile Diameter (inch caliber)</lable>
+            @Html.EditorFor(model => model.Diameter)
+        </h3>
+    </p>
+    <p>
+        <h3>
+            <lable>Projectile Drag Coefficient</lable>
+            @Html.EditorFor(model => model.DragCoef)
+        </h3>
+    </p>
+</div>
+<h2>Input Shot Characteristics</h2>
+<div id="indent">
+    <p>
+        <h3>
+            <lable>Distance to Target (m)</lable>
+            @Html.EditorFor(model => model.Distance)
+        </h3>
+    </p>
+    <p>
+        <h3>
+            <lable>Wind Direction (degrees)</lable>
+            @Html.EditorFor(model => model.WindDirection)
+        </h3>
+    </p>
+    <p>
+        <h3>
+            <lable>Wind Speed (MPH)</lable>
+            @Html.EditorFor(model => model.WindVelocityMPH)
+        </h3>
+    </p>
+    <p>
+        <h3>
+            <lable>Ambient Temperature (F)</lable>
+            @Html.EditorFor(model => model.TempFarenheit)
+        </h3>
+    </p>
+</div>
