@@ -4,12 +4,7 @@ namespace BallisticsCalcApp.Models
 {
     public class Ballistics
     {
-
-        /// <summary>
-        ///  INPUT PARAMS
-        /// </summary>
         // speed of the projectile in meters/second
-
         public string Velocity { get; set; }
         public string Mass { get; set; }
         public string Diameter { get; set; }
@@ -21,20 +16,22 @@ namespace BallisticsCalcApp.Models
         public string EstImpactTime { get; set; }
         // TODO not really implemented yet.
         public string AirDensity { get; set; }
-        public string DragCoef  { get; set; }
+        public string DragCoef { get; set; }
 
-        // String Props
+        // Double Props
         public double DoubleMeterVelocity { get; set; }
         public double DoubleMassKilos { get; set; }
         public double DoubleAreaMeters { get; set; }
         public double DoubleTargetDistMeters { get; set; }
         public double DoubleDragCoef { get; set; }
-
-        // density of air pressure
         public double pAirDensity = 1.225;
-        // Pressure in atmospheres
-        // Temperature in Celcius
         public double TempCelcius { get; set; }
+
+        // Wind
+        public string WindDirection { get; set; }
+        public string WindVelocityMPH { get; set; }
+        public double VelocityZ { get; set; }
+        public double DistanceZ { get; set; }
 
         // default constructor
         public Ballistics() { }
@@ -55,27 +52,42 @@ namespace BallisticsCalcApp.Models
 
         }
 
-        // TODO Ballisitics WIND
+
+        //  Ballisitics WIND
+        public void EstimateWind(string windDirection, string windVelocity)
+        {
+            int direction = Convert.ToInt32(windDirection);
+            double velocity = Convert.ToDouble(windVelocity);
+            // convert wind in MPH to meters/second 0.44704
+            velocity = velocity * 0.44704;
+
+            double windValue =0;
+
+            if (direction > 330 && direction <= 360 || direction > 0 && direction < 30
+                || direction > 150 && direction < 210)
+            {
+                windValue = 0;
+            }
+            else if ((direction > 30 && direction < 60) || (direction < 330 && direction > 300)
+                || (direction > 210 && direction < 240) || (direction < 150 && direction > 120))
+            {
+                windValue = 0.75;
+            }
+            else if ((direction > 60 && direction < 120) ||(direction > 240 && direction < 300))
+            {
+                windValue = 1.0;
+            }
+
+            // Rate * Time = Dist
+            DistanceZ = Convert.ToDouble(this.EstImpactTime) * velocity * windValue;
+            VelocityZ = velocity;
+        }
+
         public void DoBallisticsMath()
         {
             Ballistics b = new Ballistics();
             // Call calculate pressure and pass the present temp to configure air density.
             CalculatePressure(TempCelcius);
-
-            /*
-            Ballistics b = new Ballistics
-            {
-                Diameter = .00762,    // take input of 7.62 mm and divide by 1000 to get in meters
-                Velocity = 762, // 762 m/s is 2500ft per second
-                Mass = 0.01360777, // 0.01360777 kg is 210 grains
-                AngleOfBarrel = Math.PI * 0 / 180.0,
-                TargetDistance = 1000
-            };
-            */
-
-            // b.DistanceY = 0.25; // Assuming shooter's barrel is approx 1foot off the ground
-
-            ////////////////////////////////////////////////////////////////////////////
 
             const double Gravity = -9.8;
 
@@ -94,8 +106,7 @@ namespace BallisticsCalcApp.Models
             EstImpactTime = Convert.ToString( DoubleTargetDistMeters / DoubleMeterVelocity);
 
             // initial values
-            //b.ForceOfDrag = .5 * p * b.Velocity * b.Velocity *coefficientDrag * area;
-           // Console.WriteLine($"Area of the projectile is {area}, initial velocity is {b.Velocity}");
+            // Console.WriteLine($"Area of the projectile is {area}, initial velocity is {b.Velocity}");
             // Vy = Vy0 + a*t/2
             VelocityY = DoubleMeterVelocity * Math.Sin(AngleOfBarrel);
             // Vx = Vx0 + a (drag is negative accelleration in this case. factored later)
@@ -126,18 +137,6 @@ namespace BallisticsCalcApp.Models
 
 
                 DistanceY = DistanceY + (VelocityY * 0.001 + 0.5 * Gravity * 0.001 * 0.001);
-
-
-                // using DofY formula and adding drag in Y direction
-                // Vy0 * t         +     1/2 *g * t^2
-                // between 0 and t/2 do this
-                //  b.DistanceY = b.DistanceY + (b.VelocityY * 0.001) / 2 - b.ForceOfDragY;
-
-                // between t/2 and t do this
-                //   b.DistanceY = b.DistanceY + (b.VelocityY * 0.001) / 2 + b.ForceOfDragY;
-
-
-
 
                 // b.TargetDistance = b.TargetDistance - b.DistanceX;
 
