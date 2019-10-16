@@ -32,9 +32,10 @@ namespace BallisticsCalcApp.Controllers
             // contextDB.Ballistics.Add(ballistics);
             //OH GOD!!!!!
             ballistics.SetBallistics(ballistics.Velocity, ballistics.Mass, ballistics.Diameter, ballistics.Distance, ballistics.TempFarenheit, ballistics.DragCoef);
-            
             ballistics.CalculatePressure(ballistics.TempCelcius);
             ballistics.DoBallisticsMath();
+            // ballistics math must run first
+            ballistics.EstimateWind(ballistics.WindDirection, ballistics.WindVelocityMPH);
 
 
             return View("Result", ballistics);
