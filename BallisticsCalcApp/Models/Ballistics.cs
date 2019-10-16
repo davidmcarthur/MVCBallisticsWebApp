@@ -80,10 +80,12 @@ namespace BallisticsCalcApp.Models
             }
             else
             {
-                throw new Exception(message: "Unhandled input error");
+                velocity = 0;
+                windValue = 0;
             }
 
             // Rate * Time = Dist
+            // will be in meters...
             DistanceZ = Convert.ToDouble(this.EstImpactTime) * velocity * windValue;
             
         }

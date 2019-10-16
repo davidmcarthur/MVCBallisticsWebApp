@@ -8,9 +8,7 @@ using System.Web.Mvc;
 namespace BallisticsCalcApp.Controllers
 {
     public class BallisticsController : Controller
-    {
-            
-
+    {   
         public ActionResult Index()
         {
             Ballistics ballistics = new Ballistics();
