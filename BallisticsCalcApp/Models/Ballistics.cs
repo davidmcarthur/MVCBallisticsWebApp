@@ -30,7 +30,8 @@ namespace BallisticsCalcApp.Models
         // Wind
         public string WindDirection { get; set; }
         public string WindVelocityMPH { get; set; }
-        public double VelocityZ { get; set; }
+        // unused thus far.
+        //public double VelocityZ { get; set; }
         public double DistanceZ { get; set; }
 
         // default constructor
@@ -77,10 +78,14 @@ namespace BallisticsCalcApp.Models
             {
                 windValue = 1.0;
             }
+            else
+            {
+                throw new Exception(message: "Unhandled input error");
+            }
 
             // Rate * Time = Dist
             DistanceZ = Convert.ToDouble(this.EstImpactTime) * velocity * windValue;
-            VelocityZ = velocity;
+            
         }
 
         public void DoBallisticsMath()
