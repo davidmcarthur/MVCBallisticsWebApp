@@ -23,7 +23,13 @@
     <p>
         <h3>
             <label>Wind Value calculated to:</label>
-            @Html.DisplayFor(model => model.WindValue) meters
+            @Html.DisplayFor(model => model.WindValue) (0-full value)
+        </h3>
+    </p>
+    <p>
+        <h3>
+            <label>Wind push calculated to :</label>
+            @Html.DisplayFor(model => model.DistanceZ) meters
         </h3>
     </p>
 </div>

@@ -56,6 +56,7 @@ namespace BallisticsCalcApp.Models
             // convert temp to C
             SetTemp(tempFarenheit);
             // Set wind variables
+            DoubleDragCoef = Convert.ToDouble(dragCoef);
             windVelocityMPH = this.WindVelocityMPH;
             windDirection = this.WindDirection;
 
@@ -71,6 +72,9 @@ namespace BallisticsCalcApp.Models
             
             double windValue =0;
 
+            // wind value based off USMC marksmanship guide
+            // head and tail wind out 30* to each side are 0 value
+            // full value is witnessed at perpendicular angles.
             if (direction > 330 && direction <= 360 || direction > 0 && direction < 30
                 || direction > 150 && direction < 210)
             {
@@ -91,9 +95,11 @@ namespace BallisticsCalcApp.Models
                 windValue = 0;
             }
 
-            // Rate * Time = Dist
-            // will be in meters...
-            DistanceZ = Convert.ToDouble(this.EstImpactTime) * velocity * windValue;
+            // Calculation of the affects of wind was estimated using 
+            // Dz = Vz0 + 0.5 * a * t^2 Vz0 is assumed 0 because wind will not affect
+            // the projectile until the force is observed.
+            double esttime = Convert.ToDouble(EstImpactTime);
+            DistanceZ = 0.5 * Math.Pow(esttime,2) * velocity * windValue;
             WindValue = windValue;
         }
 
@@ -145,10 +151,9 @@ namespace BallisticsCalcApp.Models
                 // Vy = Vy0*t - g*t/2
                 VelocityY = VelocityY + 0.5 * Gravity * 0.001;
 
-                /// DISTANCE X & Y
-                ///  x = V0x*t + 1/*2ax*t^2 acceleration is Df
+                // DISTANCE X & Y
+                //  x = V0x*t + 1/*2ax*t^2 acceleration is Df
                 DistanceX = DistanceX + VelocityX * 0.001;
-
 
                 DistanceY = DistanceY + (VelocityY * 0.001 + 0.5 * Gravity * 0.001 * 0.001);
 
