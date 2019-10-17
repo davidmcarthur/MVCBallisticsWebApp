@@ -63,6 +63,8 @@ namespace BallisticsCalcApp.Models
         }
 
 
+        // TODO implement the MOA, MIL drop and wind
+
         //  Ballisitics WIND
         public void EstimateWind()
         {
@@ -100,6 +102,11 @@ namespace BallisticsCalcApp.Models
             // the projectile until the force is observed.
             double esttime = Convert.ToDouble(EstImpactTime);
             DistanceZ = 0.5 * Math.Pow(esttime,2) * velocity * windValue;
+            // conver from meters to inches
+            DistanceZ = Math.Round((DistanceZ * 39.3701),2);
+            // limit to 2 decimal spots
+            
+
             WindValue = windValue;
         }
 
@@ -123,7 +130,8 @@ namespace BallisticsCalcApp.Models
             // Not input parameter
             // double coefficientDrag = .410; // that's a good bullet!
             double DistanceX = 0, DistanceY = 0;
-            EstImpactTime = Convert.ToString( DoubleTargetDistMeters / DoubleMeterVelocity);
+            EstImpactTime = Convert.ToString (Math.Round((DoubleTargetDistMeters / DoubleMeterVelocity),3));
+            
 
             // initial values
             // Console.WriteLine($"Area of the projectile is {area}, initial velocity is {b.Velocity}");
@@ -174,9 +182,14 @@ namespace BallisticsCalcApp.Models
 
             }
             // Convert back to Feet per second
-            FinalVelocity = Convert.ToString(VelocityX);
-            // convert back to feet or inches???
-            // need to implement the MOA, MIL drop now.
+            VelocityX *= 3.28084;
+            FinalVelocity = Convert.ToString(Math.Round(VelocityX, 2));
+
+            // convert back to inches
+            
+            DistanceY *= 39.3701;
+            // limit to 2 decimals
+            DistanceY = Math.Round(DistanceY, 2);
             BulletDrop = Convert.ToString(DistanceY);
 
         }
