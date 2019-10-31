@@ -1,5 +1,62 @@
 ﻿@model BallisticsCalcApp.Models.Ballistics
 
+
+<h2>Input Projectile Characteristics</h2>
+<div id="indent">
+    <p>
+        <h3>
+
+            <lable>Velocity of projectile (fps)</lable>
+            @Html.DisplayFor(model => model.Velocity)
+        </h3>
+    </p>
+    <p>
+        <h3>
+            <lable>Projectile Mass (grains)</lable>
+            @Html.DisplayFor(model => model.Mass)
+        </h3>
+    </p>
+    <p>
+        <h3>
+            <lable>Projectile Diameter (inch caliber)</lable>
+            @Html.DisplayFor(model => model.Diameter)
+        </h3>
+    </p>
+    <p>
+        <h3>
+            <lable>Projectile Drag Coefficient</lable>
+            @Html.DisplayFor(model => model.DragCoef)
+        </h3>
+    </p>
+</div>
+<h2>Input Shot Characteristics</h2>
+<div id="indent">
+    <p>
+        <h3>
+            <lable>Distance to Target (m)</lable>
+            @Html.DisplayFor(model => model.Distance)
+        </h3>
+    </p>
+    <p>
+        <h3>
+            <lable>Wind Direction (degrees)</lable>
+            @Html.DisplayFor(model => model.WindDirection)
+        </h3>
+    </p>
+    <p>
+        <h3>
+            <lable>Wind Speed (MPH)</lable>
+            @Html.DisplayFor(model => model.WindVelocityMPH)
+        </h3>
+    </p>
+    <p>
+        <h3>
+            <lable>Ambient Temperature (F)</lable>
+            @Html.DisplayFor(model => model.TempFarenheit)
+        </h3>
+    </p>
+</div>
+
 <h2>Return Data</h2>
 <div id="indent">
     <p>
