@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace BallisticsCalcApp.Models
 {
@@ -6,10 +7,15 @@ namespace BallisticsCalcApp.Models
     {
         // Input Properties
         // speed of the projectile in meters/second
+        [Required]
         public string Velocity { get; set; }
+        [Required]
         public string Mass { get; set; }
+        [Required]
         public string Diameter { get; set; }
+        [Required]
         public string Distance { get; set; }
+        
         public string TempFarenheit { get; set; }
 
         // Return Properties
@@ -17,27 +23,26 @@ namespace BallisticsCalcApp.Models
         public string BulletDrop { get; set; }
         public string ImpactTime { get; set; }
         public string EstImpactTime { get; set; }
-
-        // TODO not really implemented yet.
+        // TODO Air density calculations not implemented yet.
         public string AirDensity { get; set; }
         public string DragCoef { get; set; }
 
         // Conversion properties
         public double DoubleMeterVelocity { get; set; }
         public double DoubleMassKilos { get; set; }
-        public double DoubleAreaMeters { get; set; }
-        public double DoubleTargetDistMeters { get; set; }
-        public double DoubleDragCoef { get; set; }
+        public double DoubleAreaMeters;
+        public double DoubleTargetDistMeters;
+        public double DoubleDragCoef = 0.1;
 
         // TODO: Make feature to input altitude air density
         public double pAirDensity = 1.225;
-        public double TempCelcius { get; set; }
+        public double TempCelcius = 20;
 
         // Wind
         public string WindDirection { get; set; }
         public string WindVelocityMPH { get; set; }
         public double WindValue { get; set; }
-        public double DistanceZ { get; set; }
+        public double DistanceZ = 0;
 
         // default constructor
         public Ballistics() { }
