@@ -17,6 +17,7 @@ namespace BallisticsCalcApp.Models
         public string BulletDrop { get; set; }
         public string ImpactTime { get; set; }
         public string EstImpactTime { get; set; }
+
         // TODO not really implemented yet.
         public string AirDensity { get; set; }
         public string DragCoef { get; set; }
