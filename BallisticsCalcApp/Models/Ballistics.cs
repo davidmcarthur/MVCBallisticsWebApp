@@ -1,44 +1,55 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace BallisticsCalcApp.Models
 {
     public class Ballistics
     {
+        // Input Properties
         // speed of the projectile in meters/second
+        [Required]
         public string Velocity { get; set; }
+        [Required]
         public string Mass { get; set; }
+        [Required]
         public string Diameter { get; set; }
+        [Required]
         public string Distance { get; set; }
+        
         public string TempFarenheit { get; set; }
+
+        // Return Properties
         public string FinalVelocity { get; set; }
         public string BulletDrop { get; set; }
         public string ImpactTime { get; set; }
         public string EstImpactTime { get; set; }
-        // TODO not really implemented yet.
+        // TODO Air density calculations not implemented yet.
         public string AirDensity { get; set; }
         public string DragCoef { get; set; }
 
-        // Double Props
+        // Conversion properties
         public double DoubleMeterVelocity { get; set; }
         public double DoubleMassKilos { get; set; }
-        public double DoubleAreaMeters { get; set; }
-        public double DoubleTargetDistMeters { get; set; }
-        public double DoubleDragCoef { get; set; }
+        public double DoubleAreaMeters;
+        public double DoubleTargetDistMeters;
+        public double DoubleDragCoef = 0.1;
+
+        // TODO: Make feature to input altitude air density
         public double pAirDensity = 1.225;
-        public double TempCelcius { get; set; }
+        public double TempCelcius = 20;
 
         // Wind
         public string WindDirection { get; set; }
         public string WindVelocityMPH { get; set; }
-        // unused thus far.
-        //public double VelocityZ { get; set; }
-        public double DistanceZ { get; set; }
+        public double WindValue { get; set; }
+        public double DistanceZ = 0;
 
         // default constructor
         public Ballistics() { }
 
         // This method should build out the model for the conroller class.
-        public void SetBallistics(string velocity, string mass, string diameter, string distance, string tempFarenheit, string dragCoef)
+        public void SetBallistics(string velocity, string mass, string diameter, string distance, string tempFarenheit,
+            string dragCoef, string windDirection, string windVelocityMPH)
         {
             // set velocity in meters
             FromFeetPerSecond(velocity);
@@ -50,20 +61,28 @@ namespace BallisticsCalcApp.Models
             ConvertDistance(distance);
             // convert temp to C
             SetTemp(tempFarenheit);
+            // Set wind variables
+            DoubleDragCoef = Convert.ToDouble(dragCoef);
+            windVelocityMPH = this.WindVelocityMPH;
+            windDirection = this.WindDirection;
 
         }
 
 
-        //  Ballisitics WIND
-        public void EstimateWind(string windDirection, string windVelocity)
-        {
-            int direction = Convert.ToInt32(windDirection);
-            double velocity = Convert.ToDouble(windVelocity);
-            // convert wind in MPH to meters/second 0.44704
-            velocity = velocity * 0.44704;
+        // TODO implement the MOA, MIL drop and wind
 
+        //  Ballisitics WIND
+        public void EstimateWind()
+        {
+            int direction = Convert.ToInt32(WindDirection);
+            // convert wind in MPH to meters/second 0.44704
+            double velocity = (Convert.ToDouble(WindVelocityMPH)) * 0.44704;
+            
             double windValue =0;
 
+            // wind value based off USMC marksmanship guide
+            // head and tail wind out 30* to each side are 0 value
+            // full value is witnessed at perpendicular angles.
             if (direction > 330 && direction <= 360 || direction > 0 && direction < 30
                 || direction > 150 && direction < 210)
             {
@@ -84,10 +103,17 @@ namespace BallisticsCalcApp.Models
                 windValue = 0;
             }
 
-            // Rate * Time = Dist
-            // will be in meters...
-            DistanceZ = Convert.ToDouble(this.EstImpactTime) * velocity * windValue;
+            // Calculation of the affects of wind was estimated using 
+            // Dz = Vz0 + 0.5 * a * t^2 Vz0 is assumed 0 because wind will not affect
+            // the projectile until the force is observed.
+            double esttime = Convert.ToDouble(EstImpactTime);
+            DistanceZ = 0.5 * Math.Pow(esttime,2) * velocity * windValue;
+            // conver from meters to inches
+            DistanceZ = Math.Round((DistanceZ * 39.3701),2);
+            // limit to 2 decimal spots
             
+
+            WindValue = windValue;
         }
 
         public void DoBallisticsMath()
@@ -110,7 +136,8 @@ namespace BallisticsCalcApp.Models
             // Not input parameter
             // double coefficientDrag = .410; // that's a good bullet!
             double DistanceX = 0, DistanceY = 0;
-            EstImpactTime = Convert.ToString( DoubleTargetDistMeters / DoubleMeterVelocity);
+            EstImpactTime = Convert.ToString (Math.Round((DoubleTargetDistMeters / DoubleMeterVelocity),3));
+            
 
             // initial values
             // Console.WriteLine($"Area of the projectile is {area}, initial velocity is {b.Velocity}");
@@ -138,10 +165,9 @@ namespace BallisticsCalcApp.Models
                 // Vy = Vy0*t - g*t/2
                 VelocityY = VelocityY + 0.5 * Gravity * 0.001;
 
-                /// DISTANCE X & Y
-                ///  x = V0x*t + 1/*2ax*t^2 acceleration is Df
+                // DISTANCE X & Y
+                //  x = V0x*t + 1/*2ax*t^2 acceleration is Df
                 DistanceX = DistanceX + VelocityX * 0.001;
-
 
                 DistanceY = DistanceY + (VelocityY * 0.001 + 0.5 * Gravity * 0.001 * 0.001);
 
@@ -162,9 +188,14 @@ namespace BallisticsCalcApp.Models
 
             }
             // Convert back to Feet per second
-            FinalVelocity = Convert.ToString(VelocityX);
-            // convert back to feet or inches???
-            // need to implement the MOA, MIL drop now.
+            VelocityX *= 3.28084;
+            FinalVelocity = Convert.ToString(Math.Round(VelocityX, 2));
+
+            // convert back to inches
+            
+            DistanceY *= 39.3701;
+            // limit to 2 decimals
+            DistanceY = Math.Round(DistanceY, 2);
             BulletDrop = Convert.ToString(DistanceY);
 
         }
