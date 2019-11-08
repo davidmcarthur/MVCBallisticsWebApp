@@ -7,13 +7,13 @@ namespace BallisticsCalcApp.Models
     {
         // Input Properties
         // speed of the projectile in meters/second
-        [Required]
+        
         public string Velocity { get; set; }
-        [Required]
+        
         public string Mass { get; set; }
-        [Required]
+        
         public string Diameter { get; set; }
-        [Required]
+        
         public string Distance { get; set; }
         
         public string TempFarenheit { get; set; }
@@ -47,7 +47,18 @@ namespace BallisticsCalcApp.Models
         // default constructor
         public Ballistics() { }
 
-        // This method should build out the model for the conroller class.
+        /// <summary>
+        /// This method passes the string values inputted by the user and passes them to the conversion
+        /// functions for processing and use in the Math method.
+        /// </summary>
+        /// <param name="velocity"></param>
+        /// <param name="mass"></param>
+        /// <param name="diameter"></param>
+        /// <param name="distance"></param>
+        /// <param name="tempFarenheit"></param>
+        /// <param name="dragCoef"></param>
+        /// <param name="windDirection"></param>
+        /// <param name="windVelocityMPH"></param>
         public void SetBallistics(string velocity, string mass, string diameter, string distance, string tempFarenheit,
             string dragCoef, string windDirection, string windVelocityMPH)
         {
@@ -70,8 +81,10 @@ namespace BallisticsCalcApp.Models
 
 
         // TODO implement the MOA, MIL drop and wind
-
-        //  Ballisitics WIND
+        
+        /// <summary>
+        /// Ballisitics WIND estimations based off USMC Sharpshooters Manual
+        /// </summary>
         public void EstimateWind()
         {
             int direction = Convert.ToInt32(WindDirection);
@@ -116,6 +129,12 @@ namespace BallisticsCalcApp.Models
             WindValue = windValue;
         }
 
+        #region THE MATH
+        /// <summary>
+        /// DoBallisticsMath calculates the velocities and distances in the x and y directions 
+        /// taking into accound factors and forces on the projectile such as gravity, drag, ballistics
+        /// coefficient, and more.
+        /// </summary>
         public void DoBallisticsMath()
         {
             Ballistics b = new Ballistics();
@@ -171,8 +190,9 @@ namespace BallisticsCalcApp.Models
 
                 DistanceY = DistanceY + (VelocityY * 0.001 + 0.5 * Gravity * 0.001 * 0.001);
 
-                // b.TargetDistance = b.TargetDistance - b.DistanceX;
-
+                // timer counter is used to simulate time, each pass of the while loop the counter 
+                // is incrimented to simulate time, when the distance to the target is met the loop
+                // terminates and the time is known to a precise value.
                 timeCounter++;
 
                 Console.WriteLine();
@@ -197,9 +217,10 @@ namespace BallisticsCalcApp.Models
             // limit to 2 decimals
             DistanceY = Math.Round(DistanceY, 2);
             BulletDrop = Convert.ToString(DistanceY);
+            #endregion
 
         }
-
+        #region CONVERSION METHODS
         public double ConvertDistance(string distance)
         {
             // Cast string to double. Then convert from yards to meters
@@ -207,6 +228,7 @@ namespace BallisticsCalcApp.Models
             DoubleTargetDistMeters *= 1.093613;
             return DoubleTargetDistMeters;
         }
+        // TODO add to output page
         public string CalculatePressure(double tempCelcius)
         {
             // using defaul of 1ATM
@@ -218,7 +240,6 @@ namespace BallisticsCalcApp.Models
 
 
         /// Meters per second from feet per second.
-        /// 
         public double FromFeetPerSecond(string velocity)
         {
             DoubleMeterVelocity = Convert.ToDouble(velocity) * 0.3048;
@@ -254,6 +275,7 @@ namespace BallisticsCalcApp.Models
             DoubleAreaMeters = Math.PI * Math.Pow(radius, 2);
             return DoubleAreaMeters;
         }
+        #endregion
     }
 }
  
